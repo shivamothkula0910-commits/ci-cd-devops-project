@@ -1,0 +1,13 @@
+replicaCount: 2
+
+image:
+  repository: shiva0910/ci-cd-devops-project
+  tag: abc1234
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+
+containerPort: 5000

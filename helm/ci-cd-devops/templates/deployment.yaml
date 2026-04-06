@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flask-devops-app
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: flask-devops-app
@@ -16,18 +16,19 @@ spec:
     spec:
       containers:
         - name: flask-devops-app
-          image: shiva0910/ci-cd-devops-project:latest
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 5000
+            - containerPort: {{ .Values.containerPort }}
           readinessProbe:
             httpGet:
               path: /health
-              port: 5000
+              port: {{ .Values.containerPort }}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
-              port: 5000
+              port: {{ .Values.containerPort }}
             initialDelaySeconds: 10
             periodSeconds: 15
